@@ -9,6 +9,10 @@
         @if($orders)
             <div class="box">
                 <div class="box-body">
+
+                    <!-- <div class="col-md-3 col-md-offset-3"> -->
+                        <h2><a href="{{route('admin.print')}}" class="btn btn-primary btn-block">Download Invoice</a></h2>
+                    <!-- </div> -->
                     <h2>Orders</h2>
                     @include('layouts.search', ['route' => route('admin.orders.index')])
                     <table class="table">

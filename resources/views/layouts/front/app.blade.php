@@ -90,7 +90,18 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
+
                     <a class="navbar-brand" href="{{ route('home') }}">{{ config('app.name') }}</a>
+
+                    @foreach($categories as $category)
+                        <li>
+                            @if($category->children()->count() > 0)
+                                @include('layouts.front.category-sub', ['subs' => $category->children])
+                            @else
+                                <a @if(request()->segment(2) == $category->slug) class="active" @endif href="{{route('front.category.slug', $category->slug)}}">{{$category->name}} </a>
+                            @endif
+                        </li>
+                    @endforeach
                 </div>
                 <div class="col-md-10">
                     @include('layouts.front.header-cart')

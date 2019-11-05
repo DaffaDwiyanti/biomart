@@ -1,15 +1,39 @@
-<section id="hero" class="hero-section top-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="hero-content">
-                    <h1 class="hero-title">{{config('app.name')}} Holiday <br> Collection</h1>
-                    <p class="hero-text">Download this amazing e-commerce web app for <strong class="text-success">FREE!</strong></p>
-                    <a class="btn btn-success" href="https://github.com/jsdecena/laracom" target="_blank" role="button">DOWNLOAD <i class="fa fa-cloud-download"></i></a>
-                    <a class="btn btn-danger" href="https://m.do.co/c/bce94237de96" target="_blank" role="button">Build on DigitalOcean <i class="fa fa-paper-plane"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4"></div>
-        </div>
-    </div>
-</section>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<style>
+.mySlides {
+    display:none;
+  height: 500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+</style>
+<body>
+
+<div class="w3-content w3-display-container">
+  <img class="mySlides" src="http://www.biovital.co.id/wp-content/uploads/2019/01/diamond.png" style="width:100%">
+  <img class="mySlides" src="http://www.biovital.co.id/wp-content/uploads/2019/01/melabic.png" style="width:100%">
+  <img class="mySlides" src="http://www.biovital.co.id/wp-content/uploads/2019/03/ginsamyong-24k.png" style="width:100%">
+  <img class="mySlides" src="http://www.biovital.co.id/wp-content/uploads/2019/01/botol-biru-ok.png" style="width:100%">
+
+  <button class="w3-button w3-black w3-display-left" onclick="plusDivs(-1)">&#10094;</button>
+  <button class="w3-button w3-black w3-display-right" onclick="plusDivs(1)">&#10095;</button>
+</div>
+
+<script>
+var myIndex = 0;
+carousel();
+
+function carousel() {
+  var i;
+  var x = document.getElementsByClassName("mySlides");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  myIndex++;
+  if (myIndex > x.length) {myIndex = 1}    
+  x[myIndex-1].style.display = "block";  
+  setTimeout(carousel, 2000); // Change image every 2 seconds
+}
+</script>

@@ -18,7 +18,7 @@
             </div>
         </div>
     @endif
-    <div class="container">
+    <!-- <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h3>Join 100,000 people already collaborating </h3>
@@ -30,5 +30,5 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
 </section>

@@ -19,6 +19,11 @@ use App\Shop\OrderStatuses\Repositories\OrderStatusRepository;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Carbon\Carbon;
+
+
 
 class OrderController extends Controller
 {
@@ -189,5 +194,19 @@ class OrderController extends Controller
             $order->status = $orderStatusRepo->findOrderStatusById($order->order_status_id);
             return $order;
         })->all();
+    }
+
+    public function print(){
+        // $spreadsheet = new Spreadsheet();
+        $mytime = Carbon::now();
+        $mytime->toDateTimeString();
+        $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('template.xls');
+        $worksheet = $spreadsheet->getActiveSheet();
+
+        $worksheet->getCell('G10')->setValue($mytime->format('l\\, F j\\, Y ') );
+
+        $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xls');
+        $writer->save('Invoice.xls');
+        return redirect()->route('admin.orders.index');
     }
 }
