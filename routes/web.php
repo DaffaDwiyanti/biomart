@@ -90,6 +90,7 @@ Route::namespace('Front')->group(function () {
         });
 
         Route::get('accounts', 'AccountsController@index')->name('accounts');
+        Route::get('orders/{id}/invoice', 'AccountsController@generateInvoice')->name('orders.invoice.generate');
         Route::get('checkout', 'CheckoutController@index')->name('checkout.index');
         Route::post('checkout', 'CheckoutController@store')->name('checkout.store');
         Route::get('checkout/execute', 'CheckoutController@executePayPalPayment')->name('checkout.execute');

@@ -1,8 +1,8 @@
 {
-    "name": "jsdecena/laracom",
+    "name": "Sales",
     "description": "Laravel powered e-commerce",
     "keywords": ["e-commerce", "ecommerce", "shopping-cart", "laravel", "laracom", "laravel-ecommerce", "shop", "laravel5", "framework", "package"],
-    "license": "MIT",
+    "license": "",
     "type": "project",
     "require": {
         "php": ">=7.1.3",
@@ -24,7 +24,11 @@
         "paypal/rest-api-sdk-php": "*",
         "phpoffice/phpspreadsheet": "^1.9",
         "santigarcor/laratrust": "5.0.*",
-        "shippo/shippo-php": "^1.4"
+        "shippo/shippo-php": "^1.4",
+
+        "infyomlabs/laravel-generator": "dev-master",
+        "laravelcollective/html": "5.2.*",
+        "infyomlabs/core-templates": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -201,7 +201,10 @@ class OrderController extends Controller
         $mytime = Carbon::now();
         $mytime->toDateTimeString();
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load('template.xls');
-        $worksheet = $spreadsheet->getActiveSheet();
+        $spreadsheet->createSheet();
+        $clonedWorksheet = clone $spreadsheet->getSheetByName('Worksheet 1');
+        $clonedWorksheet->setTitle('Copy of Worksheet 1');
+        $spreadsheet->addSheet($clonedWorksheet);
 
         $worksheet->getCell('G10')->setValue($mytime->format('l\\, F j\\, Y ') );
 

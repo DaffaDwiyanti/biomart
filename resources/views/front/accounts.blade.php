@@ -94,7 +94,12 @@
                                                               </tbody>
                                                             </table>
                                                         </div>
+
                                                         <div class="modal-footer">
+
+                                                        <div class="col-md-3 ">
+                                                            <h2><a href="{{route('orders.invoice.generate', $order['id'])}}" class="btn btn-primary btn-block">Download Invoice</a></h2>
+                                                        </div>
                                                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                                         </div>
                                                     </div>
