@@ -68,7 +68,20 @@ class OrderController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function invoice()
+    {
+        $list = $this->orderRepo->listOrders('created_at', 'desc');
+
+        if (request()->has('q')) {
+            $list = $this->orderRepo->searchOrder(request()->input('q') ?? '');
+        }
+
+        $orders = $this->orderRepo->paginateArrayResults($this->transFormOrder($list), 10);
+
+        return view('admin.orders.listInvoice', ['orders' => $orders]);
+    }
+
+        public function index()
     {
         $list = $this->orderRepo->listOrders('created_at', 'desc');
 
@@ -139,18 +152,23 @@ class OrderController extends Controller
      */
     public function update(Request $request, $orderId)
     {
-        $order = $this->orderRepo->findOrderById($orderId);
-        $orderRepo = new OrderRepository($order);
+        // if ($request->order_status_id =="on-delivery") {
+        //     return "dijalan";
+        // }else {
 
-        if ($request->has('total_paid') && $request->input('total_paid') != null) {
-            $orderData = $request->except('_method', '_token');
-        } else {
-            $orderData = $request->except('_method', '_token', 'total_paid');
-        }
+            $order = $this->orderRepo->findOrderById($orderId);
+            $orderRepo = new OrderRepository($order);
 
-        $orderRepo->updateOrder($orderData);
+            if ($request->has('total_paid') && $request->input('total_paid') != null) {
+                $orderData = $request->except('_method', '_token');
+            } else {
+                $orderData = $request->except('_method', '_token', 'total_paid');
+            }
+            $orderRepo->updateOrder($orderData);
 
-        return redirect()->route('admin.orders.edit', $orderId);
+            return redirect()->route('admin.orders.edit', $orderId);
+            
+        // }
     }
 
     /**

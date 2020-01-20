@@ -98,12 +98,19 @@
                                             </form>
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                            <span class="hidden-lg hidden-md"><small>Price: </span>
-                                            {{config('cart.currency')}} {{ number_format($cartItem->price, 2) }}</small>
+                                            @if($cartItem->deduction == 0)
+                                            {{config('cart.currency')}} 
+                                                <span class="hidden-lg hidden-md"><small>Price: </span>{{ number_format($cartItem->price, 2) }}</small>
+                                            @else
+                                            {{config('cart.currency')}} 
+                                                <span class="hidden-lg hidden-md"><small>Price: </span>
+                                                <strike>{{ number_format($cartItem->price, 2) }}</strike> <br/>
+                                            {{config('cart.currency')}} {{ number_format($cartItem->discountPrice, 2) }}</small>
+                                            @endif
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                             <span class="hidden-lg hidden-md"><small>Total: </span>
-                                            {{config('cart.currency')}} {{ number_format(($cartItem->qty*$cartItem->price), 2) }}</small>
+                                            {{config('cart.currency')}} {{ number_format(($cartItem->qty*$cartItem->discountPrice), 2) }}</small>
                                         </div>
 
                                     </div>
@@ -122,13 +129,13 @@
                     <div class="col-md-12 content">
                         <table class="table table-striped">
                             <tfoot>
-                                <tr>
+                                <!-- <tr>
                                     <td class="bg-warning">Subtotal</td>
                                     <td class="bg-warning"></td>
                                     <td class="bg-warning"></td>
                                     <td class="bg-warning"></td>
                                     <td class="bg-warning">{{config('cart.currency')}} {{ number_format($subtotal, 2, '.', ',') }}</td>
-                                </tr>
+                                </tr> -->
                                 @if(isset($shippingFee) && $shippingFee != 0)
                                 <tr>
                                     <td class="bg-warning">Shipping</td>

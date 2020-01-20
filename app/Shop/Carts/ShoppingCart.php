@@ -46,7 +46,7 @@ class ShoppingCart extends Cart
         $content = $this->getContent();
 
         $total = $content->reduce(function ($total, CartItem $cartItem) {
-            return $total + ($cartItem->qty * $cartItem->priceTax);
+            return $total + ($cartItem->qty * $cartItem->discountPrice);
         }, 0);
 
         $grandTotal = $total + $shipping;

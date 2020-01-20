@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Front;
 
 use App\Shop\Products\Product;
+use App\Shop\Products\HistoryL;
 use App\Shop\Products\Repositories\Interfaces\ProductRepositoryInterface;
 use App\Http\Controllers\Controller;
 use App\Shop\Products\Transformations\ProductTransformable;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -64,5 +66,20 @@ class ProductController extends Controller
             'productAttributes',
             'category'
         ));
+    }
+
+    public function historyL(){
+        $historyL = HistoryL::all();
+        return view('admin.products.historyL')->with('historyL', $historyL);
+    }
+
+    public function historyLStore(Request $request){
+        $input = $request->all();
+
+        $historyL = HistoryL::create($input);
+
+        Flash::success('History saved successfully.');
+
+        return redirect(route('products.historyL'));
     }
 }

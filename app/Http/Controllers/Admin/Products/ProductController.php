@@ -143,6 +143,7 @@ class ProductController extends Controller
         if ($request->hasFile('cover') && $request->file('cover') instanceof UploadedFile) {
             $data['cover'] = $this->productRepo->saveCoverImage($request->file('cover'));
         }
+        
 
         $product = $this->productRepo->createProduct($data);
 
@@ -158,6 +159,12 @@ class ProductController extends Controller
             $productRepo->detachCategories();
         }
 
+        DB::table('history_logistics')->insert([
+            'productID' => $request->input('sku'),
+            'total' =>   $request->input('quantity'),
+            'activity' => 'Increase Stock',
+            'activityID' => $request->input('name') . " Stock Created"
+        ]);
         return redirect()->route('admin.products.edit', $product->id)->with('message', 'Create successful');
     }
 
@@ -229,6 +236,14 @@ class ProductController extends Controller
     {
         $product = $this->productRepo->findProductById($id);
         $productRepo = new ProductRepository($product);
+
+
+            DB::table('history_logistics')->insert([
+                'productID' => $product->sku,
+                'total' =>  $request->quantity - $product->quantity,
+                'activity' => 'Increase Stock',
+                'activityID' => $product->name . " Stock Updated"
+            ]);
 
         if ($request->has('attributeValue')) {
             $this->saveProductCombinations($request, $product);

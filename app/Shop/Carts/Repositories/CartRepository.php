@@ -14,6 +14,7 @@ use Gloudemans\Shoppingcart\Cart;
 use Gloudemans\Shoppingcart\CartItem;
 use Gloudemans\Shoppingcart\Exceptions\InvalidRowIDException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CartRepository extends BaseRepository implements CartRepositoryInterface
 {
@@ -169,9 +170,25 @@ class CartRepository extends BaseRepository implements CartRepositoryInterface
         return $this->getCartItems()->map(function ($item) {
             $productRepo = new ProductRepository(new Product());
             $product = $productRepo->findProductById($item->id);
+
+            $discounst = DB::table('category_product')
+            ->join('categories', 'category_product.category_id','=','categories.id')
+            ->select('categories.deduction')
+            ->where('product_id',$item->id )
+            ->get();
+            $item->undiscount = $product->price;
+            $discount = $product->price - ( $product->price * $discounst[0]->deduction / 100);
+            if ($discounst[0]->deduction == 0) {
+                $product->price = $product->price;
+            }else {
+                $product->price = $discount;
+            }
+
             $item->product = $product;
             $item->cover = $product->cover;
             $item->description = $product->description;
+            $item->discountPrice = $discount;
+            $item->deduction = $discounst[0]->deduction;
             return $item;
         });
     }

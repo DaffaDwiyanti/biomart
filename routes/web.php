@@ -22,6 +22,11 @@ Route::namespace('Admin')->group(function () {
     Route::post('admin/login', 'LoginController@login')->name('admin.login');
     Route::get('admin/logout', 'LoginController@logout')->name('admin.logout');
 });
+
+Route::get('admin/logisticsHistory', 'Front\ProductController@historyL')->name('admin.products.historyL');
+Route::get('admin/logisticsHistory/create', 'Front\ProductController@historyLStore')->name('admin.products.historyLStore');
+Route::get('orders/invoice', 'Admin\Orders\OrderController@invoice')->name('admin.orders.invoice');
+
 Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.' ], function () {
     Route::namespace('Admin')->group(function () {
         Route::group(['middleware' => ['role:admin|superadmin|clerk, guard:employee']], function () {
@@ -68,6 +73,11 @@ Route::group(['prefix' => 'admin', 'middleware' => ['employee'], 'as' => 'admin.
 /**
  * Frontend routes
  */
+
+
+Route::get('/cashier','CashierController@index');
+Route::POST('/cashier','CashierController@store')->name('Cashier.store');
+
 Auth::routes();
 Route::namespace('Auth')->group(function () {
     Route::get('cart/login', 'CartLoginController@showLoginForm')->name('cart.login');

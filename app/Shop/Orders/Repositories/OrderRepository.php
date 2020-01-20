@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Mail;
+use DB;
 
 class OrderRepository extends BaseRepository implements OrderRepositoryInterface
 {
@@ -132,6 +133,13 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         ]);
         $product->quantity = ($product->quantity - $quantity);
         $product->save();
+
+        DB::table('history_logistics')->insert([
+            'productID' => $product->sku,
+            'total' =>  0 - $quantity,
+            'activity' => 'Purchase Order',
+            'activityID' => $this->model->reference
+        ]);
     }
 
     /**
@@ -200,6 +208,7 @@ class OrderRepository extends BaseRepository implements OrderRepositoryInterface
         $items->each(function ($item) {
             $productRepo = new ProductRepository(new Product);
             $product = $productRepo->find($item->id);
+            
             if ($item->options->has('product_attribute_id')) {
                 $this->associateProduct($product, $item->qty, [
                     'product_attribute_id' => $item->options->product_attribute_id

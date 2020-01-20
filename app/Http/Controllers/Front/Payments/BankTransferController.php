@@ -91,6 +91,8 @@ class BankTransferController extends Controller
             'shipmentObjId' => $this->shipmentObjId,
             'billingAddress' => $this->billingAddress
         ]);
+
+        
     }
 
     /**
@@ -116,7 +118,7 @@ class BankTransferController extends Controller
             'total_products' => $this->cartRepo->getSubTotal(),
             'total' => $this->cartRepo->getTotal(2, $this->shippingFee),
             'total_shipping' => $this->shippingFee,
-            'total_paid' => 0,
+            'total_paid' => $this->cartRepo->getTotal(2, $this->shippingFee),
             'tax' => $this->cartRepo->getTax()
         ]);
 

@@ -42,12 +42,12 @@
                     </tr>
                     </tbody>
                     <tbody>
-                    <tr>
+                    <!-- <tr>
                         <td></td>
                         <td></td>
                         <td class="bg-warning">Subtotal</td>
                         <td class="bg-warning">{{ $order['total_products'] }}</td>
-                    </tr>
+                    </tr> -->
                     <tr>
                         <td></td>
                         <td></td>

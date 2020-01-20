@@ -1,5 +1,28 @@
-@if(!$products->isEmpty())
-<div class="row">
+
+
+@section('contentz')
+        <div class="container product-in-cart-list">
+            @if(!$cartItems->isEmpty())
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="{{ route('home') }}"> <i class="fa fa-home"></i> Home</a></li>
+                            <li class="active">Cart</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 content">
+                        <div class="box-body">
+                            @include('layouts.errors-and-messages')
+                        </div>
+                        <h3><i class="fa fa-cart-plus"></i> Shopping Cart</h3>
+                    </div>
+                </div>
+
+
+                <div class="row">
                     <div class="col-md-12">
                         <!-- <div class="row header hidden-xs hidden-sm"> -->
                         <div class="row hidden-xs hidden-sm" style="height: 40px;">
@@ -54,6 +77,7 @@
                                             @endif
                                             <!-- <div class="product-description"> -->
                                                 {!! $cartItem->product->description !!}
+                                                
                                             <!-- </div> -->
                                         </div>
                                         
@@ -75,8 +99,18 @@
                                             </form>
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
-                                            <span class="hidden-lg hidden-md"><small>Price: </span>
+                                            
+                                            
+                                            @if($cartItem->deduction == 0)
+                                            {{config('cart.currency')}} 
+                                                <span class="hidden-lg hidden-md"><small>Price: </span>{{ number_format($cartItem->price, 2) }}</small>
+                                            @else
+                                            {{config('cart.currency')}} 
+                                                <span class="hidden-lg hidden-md"><small>Price: </span>
+                                                <strike>{{ number_format($cartItem->price, 2) }}</strike> <br/>
                                             {{config('cart.currency')}} {{ number_format($cartItem->discountPrice, 2) }}</small>
+                                            @endif
+                                            
                                         </div>
                                         <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                                             <span class="hidden-lg hidden-md"><small>Total: </span>
@@ -93,17 +127,72 @@
 
                     </div>
                 </div>
-@endif
-<script type="text/javascript">
-    $(document).ready(function () {
-        let courierRadioBtn = $('input[name="rate"]');
-        courierRadioBtn.click(function () {
-            $('#shippingFee').text($(this).data('fee'));
-            let totalElement = $('span#grandTotal');
-            let shippingFee = $(this).data('fee');
-            let total = totalElement.data('total');
-            let grandTotal = parseFloat(shippingFee) + parseFloat(total);
-            totalElement.html(grandTotal.toFixed(2));
-        });
-    });
-</script>
+               
+
+                <div class="row">
+                    <div class="col-md-12 content">
+                        <table class="table table-striped">
+                            <tfoot>
+                                <!-- <tr>
+                                    <td class="bg-warning">Subtotal</td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning">{{config('cart.currency')}} {{ number_format($subtotal, 2, '.', ',') }}</td>
+                                </tr> -->
+                                @if(isset($shippingFee) && $shippingFee != 0)
+                                <tr>
+                                    <td class="bg-warning">Shipping</td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning">{{config('cart.currency')}} {{ $shippingFee }}</td>
+                                </tr>
+                                @endif
+                                <tr>
+                                    <td class="bg-warning">Tax</td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning"></td>
+                                    <td class="bg-warning">{{config('cart.currency')}} {{ number_format($tax, 2) }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="bg-success">Total</td>
+                                    <td class="bg-success"></td>
+                                    <td class="bg-success"></td>
+                                    <td class="bg-success"></td>
+                                    <td class="bg-success">{{config('cart.currency')}} {{ number_format($total, 2, '.', ',') }}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="btn-group pull-right">
+                                    <a href="{{ route('home') }}" class="btn btn-default">Continue shopping</a>
+                                    <a href="{{ route('checkout.index') }}" class="btn btn-primary">Go to checkout</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @else
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="alert alert-warning">No products in cart yet. <a href="{{ route('home') }}">Shop now!</a></p>
+                    </div>
+                </div>
+            @endif
+        </div>
+@endsection
+@section('css')
+    <style type="text/css">
+        .product-description {
+            padding: 10px 0;
+        }
+        .product-description p {
+            line-height: 18px;
+            font-size: 14px;
+        }
+    </style>
+@endsection

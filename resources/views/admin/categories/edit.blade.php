@@ -43,6 +43,10 @@
                             <option value="1" @if($category->status == 1) selected="selected" @endif>Enable</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="deduction">Deduction</label>
+                        <input type="text" name="deduction" id="deduction" placeholder="Deduction" class="form-control" value="{!! $category->deduction ?: old('deduction')  !!}">
+                    </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">

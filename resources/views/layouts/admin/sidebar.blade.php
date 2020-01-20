@@ -27,6 +27,7 @@
                     </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.products.historyL') }}"><i class="fa fa-circle-o"></i> List logistics</a></li>
                     @if($user->hasPermission('view-product'))<li><a href="{{ route('admin.products.index') }}"><i class="fa fa-circle-o"></i> List products</a></li>@endif
                     @if($user->hasPermission('create-product'))<li><a href="{{ route('admin.products.create') }}"><i class="fa fa-plus"></i> Create product</a></li>@endif
                     <li class="@if(request()->segment(2) == 'attributes') active @endif">
@@ -98,6 +99,9 @@
                             <i class="fa fa-angle-left pull-right"></i>
                     </span>
                 </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ route('admin.orders.invoice') }}"><i class="fa fa-circle-o"></i> List invoice</a></li>
+                </ul>
                 <ul class="treeview-menu">
                     <li><a href="{{ route('admin.orders.index') }}"><i class="fa fa-circle-o"></i> List orders</a></li>
                 </ul>

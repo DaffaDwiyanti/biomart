@@ -28,7 +28,7 @@
     <section class="row">
         <div class="col-md-12">
             <h2>Details</h2>
-            <table class="table table-striped" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <table class="table table-striped" width="100%" border="1" cellspacing="0" cellpadding="0">
                 <thead>
                     <tr>
                         <th>SKU</th>

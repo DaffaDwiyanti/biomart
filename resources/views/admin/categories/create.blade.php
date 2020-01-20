@@ -36,6 +36,10 @@
                             <option value="1">Enable</option>
                         </select>
                     </div>
+                    <div class="form-group">
+                        <label for="name">Deductio</label>
+                        <input type="text" value="0" name="deduction" id="deduction" placeholder="Deduction" class="form-control" value="{{ old('deduction') }}">
+                    </div>
                 </div>
                 <!-- /.box-body -->
                 <div class="box-footer">
